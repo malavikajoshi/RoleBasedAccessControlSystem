@@ -1,12 +1,14 @@
 package com.uniquehire.rolemanagement.controller;
-
-import com.uniquehire.rolemanagement.dto.request.OrganizationRequest;
-import com.uniquehire.rolemanagement.dto.response.ApiResponse;
+import com.uniquehire.rolemanagement.dto.request.OrganizationRequestDto;
+import com.uniquehire.rolemanagement.dto.response.OrganizationResponseDTO;
 import com.uniquehire.rolemanagement.service.OrganizationService;
-
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/organizations")
@@ -16,33 +18,30 @@ public class OrganizationController {
     private final OrganizationService organizationService;
 
     @PostMapping
-    public ApiResponse createOrganization(@RequestBody OrganizationRequest request) {
-        return organizationService.createOrganization(request);
+    public ResponseEntity<OrganizationResponseDTO> createOrganization(
+            @Valid @RequestBody OrganizationRequestDto requestDto) {
+        return new ResponseEntity<>(organizationService.createOrganization(requestDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ApiResponse getOrganization(@PathVariable Long id) {
-        return organizationService.getOrganizationById(id);
+    @GetMapping("/{orgId}")
+    public ResponseEntity<OrganizationResponseDTO> getOrganizationById(@PathVariable Long orgId) {
+        return ResponseEntity.ok(organizationService.getOrganizationById(orgId));
     }
 
     @GetMapping
-    public ApiResponse getAllOrganizations(
-            @RequestParam int page,
-            @RequestParam int size) {
-
-        return organizationService.getAllOrganizations(page, size);
+    public ResponseEntity<List<OrganizationResponseDTO>> getAllOrganizations() {
+        return ResponseEntity.ok(organizationService.getAllOrganizations());
     }
 
-    @PutMapping("/{id}")
-    public ApiResponse updateOrganization(
-            @PathVariable Long id,
-            @RequestBody OrganizationRequest request) {
-
-        return organizationService.updateOrganization(id, request);
+    @PutMapping("/{orgId}")
+    public ResponseEntity<OrganizationResponseDTO> updateOrganization(
+            @PathVariable Long orgId,
+            @Valid @RequestBody OrganizationRequestDto requestDto) {
+        return ResponseEntity.ok(organizationService.updateOrganization(orgId, requestDto));
     }
 
-    @DeleteMapping("/{id}")
-    public ApiResponse deleteOrganization(@PathVariable Long id) {
-        return organizationService.deleteOrganization(id);
+    @DeleteMapping("/{orgId}")
+    public ResponseEntity<String> deleteOrganization(@PathVariable Long orgId) {
+        return ResponseEntity.ok(organizationService.deleteOrganization(orgId));
     }
 }

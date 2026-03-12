@@ -1,35 +1,27 @@
 package com.uniquehire.rolemanagement.entity;
-
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Table(name = "organizations")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Organization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long organizationId;
+    @Column(name = "org_id")
+    private Long orgId;
 
-    private String organizationName;
+    @Column(name = "org_name", nullable = false)
+    private String orgName;
 
-    private String organizationCode;
-
+    @Column(nullable = false)
     private String address;
 
-    private String status;
-
-    private LocalDateTime createdAt;
-
-    private Long createdBy;
-
-    private Long updatedBy;
-
-    private LocalDateTime updatedAt;
-
+    @Column(nullable = false, unique = true)
+    private String code;
 }

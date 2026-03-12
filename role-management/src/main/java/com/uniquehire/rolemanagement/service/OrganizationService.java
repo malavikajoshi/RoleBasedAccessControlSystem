@@ -1,18 +1,18 @@
 package com.uniquehire.rolemanagement.service;
 
-import com.uniquehire.rolemanagement.dto.request.OrganizationRequest;
-import com.uniquehire.rolemanagement.dto.response.ApiResponse;
+import com.uniquehire.rolemanagement.dto.request.OrganizationRequestDto;
+import com.uniquehire.rolemanagement.dto.response.OrganizationResponseDTO;
+import java.util.List;
 
 public interface OrganizationService {
 
-    ApiResponse createOrganization(OrganizationRequest request);
+    OrganizationResponseDTO createOrganization(OrganizationRequestDto requestDto);
 
-    ApiResponse getOrganizationById(Long id);
+    OrganizationResponseDTO getOrganizationById(Long orgId);
 
-    ApiResponse getAllOrganizations(int page, int size);
+    List<OrganizationResponseDTO> getAllOrganizations();
 
-    ApiResponse updateOrganization(Long id, OrganizationRequest request);
+    OrganizationResponseDTO updateOrganization(Long orgId, OrganizationRequestDto requestDto);
 
-    ApiResponse deleteOrganization(Long id);
-
+    String deleteOrganization(Long orgId);
 }
